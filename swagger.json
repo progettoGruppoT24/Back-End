@@ -1,0 +1,51 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0", 
+      "title": "JGuesser",
+      "description": "JGuesser_API",
+      "license": { "name": "MIT", "url": "https://opensource.org/licenses/MIT"}
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "tags": [
+      {
+        "name": "Lorenzo D'Ambrosio, Andrea Goldoni, Marco Murru",
+        "description": "API for users in the system"
+      }
+    ],
+    "schemes": ["http"],
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+    "paths": {
+        "/user": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get all users",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "User": {
+            "required": [
+                "Username"
+            ],
+            "properties": {
+                "Username": {
+                    "type": "string"
+                }
+            }
+        }
+    }   
+  }
+  

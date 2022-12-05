@@ -1,0 +1,25 @@
+{
+  "name": "jguesser",
+  "version": "1.0.0",
+  "description": "Progetto di IS",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "server": "node server.js"
+  },
+  "keywords": [
+    "SE",
+    "JGuesser"
+  ],
+  "author": "DambroIlPazzo, GoldoIlRe, MurruIlSardo",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.7.1",
+    "mongoose-express-api": "^0.0.3",
+    "swagger-ui-express": "^4.6.0"
+  }
+}
