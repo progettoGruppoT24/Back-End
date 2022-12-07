@@ -1,4 +1,0 @@
-server: importa le varie routes
-routes: dichiarazioni dei metodi
-controllers: implementazioni dei metodi
-models: struttura degli oggetti

@@ -4,7 +4,7 @@ const User = require('../models/user');
 //Elenco query con mongoose -> https://mongoosejs.com/docs/api.html#Mongoose
 //INSERIRE TUTTI GLI STATUS DI RETURN (ES 404 NOT FOUNT, 200 OK, ...)
 
-const newUser = (req, res) => {
+const signUp = (req, res) => {
     
     //Viene verificato che sia presente tale user, filtrando per username, non potranno esserci duplicati
     User.findOne({ username: req.body.username }, (err, data) => {   //User.findOne è una query nel DB
@@ -18,8 +18,9 @@ const newUser = (req, res) => {
                 email: req.body.email,
                 password: req.body.password,
                 nation: req.body.nation,
-                loggedWithGoogle: req.body.loggedWithGoogle,
-                premiumUser: req.body.premiumUser  //Di default false? Uno non crea un account già premium
+                isPremium: req.body.isPremium,
+                hasPlayedDailyChallenge: req.body.hasPlayedDailyChallenge,
+                statisticheUtente: req.body.statisticheUtente
             })
 
             // Viene salvato l'user nel database
@@ -40,79 +41,98 @@ const newUser = (req, res) => {
 };
 
 //Restituisci tutti gli user
-const getAllUser = (req, res) => {
-    User.find({}, (err, data) => {
+const getClassifica = (req, res) => {
+    User.find({}, 'username nation statisticheUtente', (err, data) => {
         if (err) {
             return res.json({ Error: err });
         }
-        return res.json({"Elenco utenti ": data });
-    })
+        return res.json({"Dati classifica": data });
+    }).sort({statisticheUtente: -1});
 };
 
-//DELETE user
-const deleteAllUser = (req, res) => {
-    User.deleteMany({}, err => {    //Query per eliminare alcuni record (credo)
-        if (err) {
-            return res.json({ message: "Errore nell'eliminazione degli utenti" });
-        }
-        return res.json({ message: "Utenti eliminati con successo" });
-    })
-};
-
-
-const getOneUserByUsername = (req, res) => {
+const getGiocatoreClassifica = (req, res) => {
     let username = req.params.username; //Prendi l'username per il quale filtrare, preso dall'URL anzichè dal body del json
 
     //Trova l'user con l'username voluto
-    User.findOne({ username: username }, (err, data) => {
+    User.findOne({ username: username }, 'username nation statisticheUtente', (err, data) => {
         if (err || !data) {
             return res.json({ message: "L'utente cercato non esiste." });
         }
-        else return res.json({"Utente cercato " : data}); //Restituisce l'utente
+        else return res.json(data); 
     });
 };
 
-
-const getOneUserByEmail = (req, res) => {
-    let email = req.params.email; //Prendi l'email per il quale filtrare
-
+const getDatiUtente = (req, res) => {
+    let username = req.params.username; //Prendi l'username per il quale filtrare, preso dall'URL anzichè dal body del json
+    console.log(req.params.username);
     //Trova l'user con l'username voluto
-    User.findOne({ email: email }, (err, data) => {
+    User.findOne({ username: username }, 'username email nazione isPremium', (err, data) => {
         if (err || !data) {
             return res.json({ message: "L'utente cercato non esiste." });
         }
-        else return res.json(data); //Restituisce l'utente
+        else return res.json(data); 
     });
 };
 
+const getStatisticheUtente = (req, res) => {
+    let username = req.params.username; //Prendi l'username per il quale filtrare, preso dall'URL anzichè dal body del json
+    console.log(req.params.username);
+    //Trova l'user con l'username voluto
+    User.findOne({ username: username }, 'statisticheUtente', (err, data) => {
+        if (err || !data) {
+            return res.json({ message: "L'utente cercato non esiste." });
+        }
+        else return res.json(data); 
+    });
+};
 
-//DELETE '/user/:name'
-const deleteOneUser = (req, res, next) => {
-
-    const result = User.deleteOne({username: req.params.username}, (err, collection) => {
+const setNuovaEmail = (req, res) => {
+    User.findOneAndUpdate({ username: req.params.username }, { $set: {email: req.params.email} }, { new: true }, (err, newEmail) => {
         if (err) {
-            throw err;
-        }
-        else {
-            if(collection.deletedCount == 0){
-                res.json("Utente inesistente");
-            }
-            else{
-                res.json({ "Eliminato utente: " : req.params.username });
-            }
-            
+            return res.json({ message: "Errore" });
+        } else {
+            res.send({
+                statusCode: 200,
+                message: `Email changed.`
+            })
         }
     });
+}
 
-};
+const setNuovaPassword = (req, res) => {
+    User.findOneAndUpdate({ username: req.params.username }, { $set: {password: req.params.password} }, { new: true }, (err, newPass) => {
+        if (err) {
+            return res.json({ message: "Errore" });
+        } else {
+            res.send({
+                statusCode: 200,
+                message: `Password changed.`
+            })
+        }
+    });
+}
 
+const upgradePremium = (req, res) => {
+    User.findOneAndUpdate({ username: req.params.username }, { $set: {isPremium: true} }, { new: true }, (err, newPass) => {
+        if (err) {
+            return res.json({ message: "Errore" });
+        } else {
+            res.send({
+                statusCode: 200,
+                message: `User now is premium`
+            })
+        }
+    });
+}
 
 //export controller functions
 module.exports = {
-    newUser,
-    getAllUser,
-    deleteAllUser,
-    getOneUserByUsername,
-    getOneUserByEmail,
-    deleteOneUser
+    signUp,
+    getClassifica,
+    getGiocatoreClassifica,
+    getDatiUtente,
+    getStatisticheUtente,
+    setNuovaEmail,
+    setNuovaPassword,
+    upgradePremium
 };
