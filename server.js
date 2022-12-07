@@ -14,13 +14,14 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));    //Il
 
 
 //const routes = require('./routes/tea');         // import the routes
-const routes = require('./routes/user');  // import the routes
+const routesUser = require('./routes/user');  // import the routes
+const routesSimbolo = require('./routes/simbolo');  // import the routes
 
 const mongoose = require('mongoose');           //import della libreria per gestire il db
 app.use(express.json());                        //permette di utilizzare una libreria di json e quindi file json
 
-app.use('/', routes);                           //posso utilizzare tutto il codice all'interno della cartella routes
-
+app.use('/', routesUser);                           //posso utilizzare tutto il codice all'interno della cartella routes
+app.use('/', routesSimbolo);                           //posso utilizzare tutto il codice all'interno della cartella routes
 
 //connessione al DB
 mongoose.connect(

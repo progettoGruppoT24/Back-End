@@ -8,4 +8,4 @@ const simboloSchema = new mongoose.Schema({
 
 const simboloAlfabeto = mongoose.model('simbolo', simboloSchema); 
 
-module.exports = simboloAlfabeto; //export for controller use
+module.exports = simboloAlfabeto;
