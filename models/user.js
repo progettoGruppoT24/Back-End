@@ -1,4 +1,3 @@
-
 const mongoose = require("mongoose"); //import mongoose
 
 const userSchema = new mongoose.Schema({
