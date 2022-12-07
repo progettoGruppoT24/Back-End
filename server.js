@@ -5,7 +5,7 @@ SI POTREBBE USARNE PIù DI UNO MA BUCCHIARONE CONSIGLIA DI USARNE SOLO UNO PER F
 
 const dotenv = require('dotenv').config();  //per usare le variabili di ambiente
 const express = require('express');         //importo express per comunicare col db e gestire il backend
-const app = express();                      //dichiaro l'applicazione come tipo express
+const app = express();                     //dichiaro l'applicazione come tipo express
 
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');  //Specifico che la documentazione verrà fatta in json
