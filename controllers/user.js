@@ -46,8 +46,8 @@ const getClassifica = (req, res) => {
         if (err) {
             return res.json({ Error: err });
         }
-        return res.json({"Dati classifica": data });
-    }).sort({statisticheUtente: -1});
+        return res.json({"Classifica": data });
+    }).sort({"statisticheUtente.punteggioTraining": -1});
 };
 
 const getGiocatoreClassifica = (req, res) => {
