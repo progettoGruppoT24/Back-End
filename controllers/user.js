@@ -125,6 +125,31 @@ const upgradePremium = (req, res) => {
     });
 }
 
+const aggiornaPunteggio = (req, res) => {
+    var username = req.params.username;
+    var punteggio = req.params.punteggio;
+    User.findOne({ username: req.params.username }, 'statisticheUtente', (err, stats) => {
+        if (err) {
+            return res.json({ message: "Errore" });
+        } else {
+            if(stats.statisticheUtente.punteggioTraining<punteggio){
+                User.findOneAndUpdate({ username: req.params.username }, { $set: {"statisticheUtente.punteggioTraining": punteggio } }, { new: true }, (err, newPunt) => {
+                    if (err) {
+                        return res.json({ message: "Errore" });
+                    } else {
+                        res.send({
+                            statusCode: 200,
+                            message: `Punteggio updated`
+                        })
+                    }
+                });
+            }
+            else
+                return res.json({ message: "Punteggio not updated"});
+        }
+    });
+}
+
 //export controller functions
 module.exports = {
     signUp,
@@ -134,5 +159,6 @@ module.exports = {
     getStatisticheUtente,
     setNuovaEmail,
     setNuovaPassword,
-    upgradePremium
+    upgradePremium,
+    aggiornaPunteggio
 };

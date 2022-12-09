@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
     nation: {type:String, required:true},                               
     isPremium: {type:Boolean, default:false}, 
     hasPlayedDailyChallenge: {type:Boolean, default:false},
-    statisticheUtente: {sfideGiornaliereGiocate:{type:Number, default:0}, sfideGiornaliereVinte:{type:Number, default:0}}
+    statisticheUtente: {sfideGiornaliereGiocate:{type:Number, default:0}, sfideGiornaliereVinte:{type:Number, default:0}, punteggioTraining:{type:Number, default:0}}
 });
 
 const User = mongoose.model('User', userSchema); //convert to model named User

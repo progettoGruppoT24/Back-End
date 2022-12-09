@@ -6,6 +6,7 @@ SI POTREBBE USARNE PIù DI UNO MA BUCCHIARONE CONSIGLIA DI USARNE SOLO UNO PER F
 const dotenv = require('dotenv').config();  //per usare le variabili di ambiente
 const express = require('express');         //importo express per comunicare col db e gestire il backend
 const app = express();                      //dichiaro l'applicazione come tipo express
+const cors = require('cors');
 
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');  //Specifico che la documentazione verrà fatta in json
@@ -20,7 +21,7 @@ const routesSfidaGiornaliera = require('./routes/sfidaGiornaliera');
 
 const mongoose = require('mongoose');           //import della libreria per gestire il db
 app.use(express.json());                        //permette di utilizzare una libreria di json e quindi file json
-
+app.use(cors());
 app.use('/', routesUser);                           //posso utilizzare tutto il codice all'interno della cartella routes
 app.use('/', routesSimbolo);
 app.use('/', routesSfidaGiornaliera);

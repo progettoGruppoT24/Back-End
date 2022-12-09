@@ -23,5 +23,7 @@ router.patch('/setNuovaPassword/:username/:password', userController.setNuovaPas
 
 router.patch('/upgradePremium/:username', userController.upgradePremium);
 
+router.patch('/aggiornaPunteggio/:username/:punteggio', userController.aggiornaPunteggio);
+
 
 module.exports = router; // export to use in server.js
