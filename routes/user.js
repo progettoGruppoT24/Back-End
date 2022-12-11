@@ -23,6 +23,8 @@ router.patch('/setNuovaPassword/:username/:password', userController.setNuovaPas
 
 router.patch('/upgradePremium/:username', userController.upgradePremium);
 
+router.patch('/setDailyChallengePlayed/:username', userController.setDailyChallengePlayed);
+
 router.patch('/aggiornaPunteggio/:username/:punteggio', userController.aggiornaPunteggio);
 
 

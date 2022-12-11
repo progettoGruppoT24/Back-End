@@ -125,6 +125,19 @@ const upgradePremium = (req, res) => {
     });
 }
 
+const setDailyChallengePlayed = (req, res) => {
+    User.findOneAndUpdate({ username: req.params.username }, { $set: {hasPlayedDailyChallenge: true} }, { new: true }, (err, result) => {
+        if (err) {
+            return res.json({ message: "Errore" });
+        } else {
+            res.send({
+                statusCode: 200,
+                message: `User has played daily challenge`
+            })
+        }
+    });
+}
+
 const aggiornaPunteggio = (req, res) => {
     var username = req.params.username;
     var punteggio = req.params.punteggio;
@@ -160,5 +173,6 @@ module.exports = {
     setNuovaEmail,
     setNuovaPassword,
     upgradePremium,
+    setDailyChallengePlayed,
     aggiornaPunteggio
 };

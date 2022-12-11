@@ -1,5 +1,6 @@
 const { collection } = require('../models/sfidaGiornaliera');
 const SfidaGiornaliera = require('../models/sfidaGiornaliera');
+const User = require('../models/user');
 
 //Elenco query con mongoose -> https://mongoosejs.com/docs/api.html#Mongoose
 //INSERIRE TUTTI GLI STATUS DI RETURN (ES 404 NOT FOUNT, 200 OK, ...)
@@ -27,16 +28,6 @@ async function generaQuizSfidaGiornaliera(tipoSfida){
     return listaQuiz;
 }
 
-async function generaSfida(){
-
-    var nuovaSfidaGiornaliera = new SfidaGiornaliera({
-        tipoDiSfida: tipoSfida,
-        data: Date.now(),
-        listaDiQuiz: listaQuiz
-    });
-    return nuovaSfidaGiornaliera;
-}
-
 async function getSfidaGiornaliera(req, res) {
     var data = await SfidaGiornaliera.findOne({}).exec();
     var tipoSfida = (Math.floor(Math.random() * 2) +1);
@@ -46,7 +37,9 @@ async function getSfidaGiornaliera(req, res) {
         data: Date.now()
     });
     if(data==null){ //non c'è nessuna sfida
+        console.log("no data");
         listaQuiz = await generaQuizSfidaGiornaliera(tipoSfida);
+        console.log(listaQuiz);
         nuovaSfidaGiornaliera.listaDiQuiz = listaQuiz;
         nuovaSfidaGiornaliera.save((err, data) => {
             if (err) return res.json({ Error: err });
@@ -58,12 +51,9 @@ async function getSfidaGiornaliera(req, res) {
         var dataCorrente = (new Date(Date.now())).toISOString().split('T')[0];
         var dataSfida = (data.data).toISOString().split('T')[0];
         if(dataCorrente!==dataSfida){ //la sfida non corrisponde alla data corrente
-            SfidaGiornaliera.deleteMany({}).exec();
-            (generaSfida()).save((err, data) => {
-                if (err) return res.json({ Error: err });
-                return res.json({"Sfida : " : data});
-            })
-            listaQuiz = await generaQuizSfidaGiornaliera(tipoSfida);
+            console.log("devo cambiare sfida");
+            await SfidaGiornaliera.deleteMany({}).exec();
+            User.updateMany({}, { hasPlayedDailyChallenge: false }).exec();
             listaQuiz = await generaQuizSfidaGiornaliera(tipoSfida);
             nuovaSfidaGiornaliera.listaDiQuiz = listaQuiz;
             nuovaSfidaGiornaliera.save((err, data) => {
@@ -72,6 +62,7 @@ async function getSfidaGiornaliera(req, res) {
         })
         }
         else{ //la sfida corrisponde alla data corrente
+            console.log("sfida gia presente");
             return res.json({"Sfida : " : data});
         }
     }
