@@ -2,7 +2,7 @@ const express = require('express'); //import express
 
 const router = express.Router();
 
-const userController = require('../controllers/sfidaGiornaliera');
+const userController = require('../controllers/sfidaGiornalieraC');
 
 router.get('/getSfidaGiornaliera', userController.getSfidaGiornaliera); 
 

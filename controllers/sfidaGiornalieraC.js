@@ -1,6 +1,6 @@
-const { collection } = require('../models/sfidaGiornaliera');
-const SfidaGiornaliera = require('../models/sfidaGiornaliera');
-const User = require('../models/user');
+const { collection } = require('../models/sfidaGiornalieraM');
+const SfidaGiornaliera = require('../models/sfidaGiornalieraM');
+const User = require('../models/userM');
 
 //Elenco query con mongoose -> https://mongoosejs.com/docs/api.html#Mongoose
 //INSERIRE TUTTI GLI STATUS DI RETURN (ES 404 NOT FOUNT, 200 OK, ...)

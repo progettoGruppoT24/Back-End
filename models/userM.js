@@ -10,6 +10,6 @@ const userSchema = new mongoose.Schema({
     statisticheUtente: {sfideGiornaliereGiocate:{type:Number, default:0}, sfideGiornaliereVinte:{type:Number, default:0}, punteggioTraining:{type:Number, default:0}}
 });
 
-const User = mongoose.model('User', userSchema); //convert to model named User
+const user = mongoose.model('user', userSchema); //convert to model named User
 
-module.exports = User; //export for controller use
+module.exports = user; //export for controller use

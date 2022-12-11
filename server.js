@@ -15,14 +15,16 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));    //Il
 
 
 //const routes = require('./routes/tea');         // import the routes
-const routesUser = require('./routes/user');  // import the routes
-const routesSimbolo = require('./routes/simbolo');  // import the routes
-const routesSfidaGiornaliera = require('./routes/sfidaGiornaliera');
+const routesLoggedUser = require('./routes/unloggedUserR');  // import the routes
+const routesUnloggedUser = require('./routes/loggedUserR');  // import the routes
+const routesSimbolo = require('./routes/simboloR');  // import the routes
+const routesSfidaGiornaliera = require('./routes/sfidaGiornalieraR');
 
 const mongoose = require('mongoose');           //import della libreria per gestire il db
 app.use(express.json());                        //permette di utilizzare una libreria di json e quindi file json
 app.use(cors());
-app.use('/', routesUser);                           //posso utilizzare tutto il codice all'interno della cartella routes
+app.use('/', routesLoggedUser);                           //posso utilizzare tutto il codice all'interno della cartella routes
+app.use('/', routesUnloggedUser);       
 app.use('/', routesSimbolo);
 app.use('/', routesSfidaGiornaliera);
 

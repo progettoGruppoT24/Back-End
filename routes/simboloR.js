@@ -2,7 +2,7 @@ const express = require('express'); //import express
 
 const router = express.Router();
 
-const userController = require('../controllers/simbolo');
+const userController = require('../controllers/simboloC');
 
 //es richiesta: localhost:8080/generaQuiz?alfabeto=["Kanji","Hiragana","Katakana"]
 router.get('/generaQuiz', userController.generaQuiz); 

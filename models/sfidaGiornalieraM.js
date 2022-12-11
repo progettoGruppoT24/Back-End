@@ -6,6 +6,6 @@ const sfidaGiornalieraSchema = new mongoose.Schema({
     listaDiQuiz: [{}]
 });
 
-const SfidaGiornaliera = mongoose.model('sfidaGiornaliera', sfidaGiornalieraSchema);
+const sfidaGiornaliera = mongoose.model('sfidaGiornaliera', sfidaGiornalieraSchema);
 
-module.exports = SfidaGiornaliera;
+module.exports = sfidaGiornaliera;

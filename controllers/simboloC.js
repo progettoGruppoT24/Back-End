@@ -1,6 +1,6 @@
-const { collection } = require('../models/simbolo');
-const Simbolo = require('../models/simbolo');
-const Quiz = require('../models/quiz');
+const { collection } = require('../models/simboloM');
+const Simbolo = require('../models/simboloM');
+const Quiz = require('../models/quizM');
 
 //Elenco query con mongoose -> https://mongoosejs.com/docs/api.html#Mongoose
 //INSERIRE TUTTI GLI STATUS DI RETURN (ES 404 NOT FOUNT, 200 OK, ...)

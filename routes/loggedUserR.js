@@ -2,16 +2,7 @@ const express = require('express'); //import express
 
 const router = express.Router();
 
-const userController = require('../controllers/user');
-
-
-
-
-router.post('/signUp', userController.signUp);   //signUp
-
-router.get('/getClassifica', userController.getClassifica); //classifica
-
-router.get('/getGiocatoreClassifica/:username', userController.getGiocatoreClassifica); //getGiocatoreClassifica
+const userController = require('../controllers/loggedUserC');
 
 router.get('/getDatiUtente/:username', userController.getDatiUtente); //datiUtente
 
