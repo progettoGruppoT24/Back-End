@@ -43,7 +43,7 @@ async function getSfidaGiornaliera(req, res) {
         nuovaSfidaGiornaliera.listaDiQuiz = listaQuiz;
         nuovaSfidaGiornaliera.save((err, data) => {
             if (err) return res.json({ Error: err });
-            return res.json({"Sfida " : data});
+            return res.json({"Sfida" : data});
         })
     }
     else{ //c'è una sfida
@@ -58,12 +58,12 @@ async function getSfidaGiornaliera(req, res) {
             nuovaSfidaGiornaliera.listaDiQuiz = listaQuiz;
             nuovaSfidaGiornaliera.save((err, data) => {
             if (err) return res.json({ Error: err });
-            return res.json({"Sfida " : data});
+            return res.json({"Sfida" : data});
         })
         }
         else{ //la sfida corrisponde alla data corrente
             console.log("sfida gia presente");
-            return res.json({"Sfida : " : data});
+            return res.json({"Sfida" : data});
         }
     }
 }

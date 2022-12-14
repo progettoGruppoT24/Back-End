@@ -138,14 +138,25 @@ const upgradePremium = (req, res) => {
 }
 
 const setDailyChallengePlayed = (req, res) => {
-    user.findOneAndUpdate({ username: req.params.username }, { $set: {hasPlayedDailyChallenge: true} }, { new: true }, (err, result) => {
-        if (err) {
-            return res.json({ message: "Errore" });
-        } else {
-            res.send({
-                statusCode: 200,
-                message: `User has played daily challenge`
-            })
+    user.findOne({ username: req.params.username }, 'username hasPlayedDailyChallenge', (err, data) => {
+        if (err || !data) {
+            return res.json({success: false, message: "L'utente cercato non esiste.", dati: null });
+        }
+        else{
+            if(data.hasPlayedDailyChallenge)
+                return res.json({message: "already_played"});
+            else{
+                user.findOneAndUpdate({ username: req.params.username }, { $set: {hasPlayedDailyChallenge: true} }, { new: true }, (err, result) => {
+                    if (err) {
+                        return res.json({ message: "Errore" });
+                    } else {
+                        res.send({
+                            statusCode: 200,
+                            message: `User has played daily challenge`
+                        })
+                    }
+                });
+            }
         }
     });
 }
