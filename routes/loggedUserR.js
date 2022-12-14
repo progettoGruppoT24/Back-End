@@ -4,9 +4,13 @@ const router = express.Router();
 
 const userController = require('../controllers/loggedUserC');
 
-router.get('/getDatiUtente/:username', userController.getDatiUtente); //datiUtente
+router.get('/getDatinUtente/:username', userController.getDatiUtente); //datiUtente
+
+router.get('/getCredenziali/:email', userController.getCredenziali); //datiUtente
 
 router.get('/getStatisticheUtente/:username', userController.getStatisticheUtente);
+
+router.post('/sendEmail', userController.sendEmail);
 
 router.patch('/setNuovaEmail/:username/:email', userController.setNuovaEmail);
 
