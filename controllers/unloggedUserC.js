@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
+//const jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 const user = require('../models/userM');
 
 const signUp = (req, res) => {
@@ -51,6 +51,7 @@ const authentication = async function (req, res) {
             res.json({ success: false, message: 'Authentication failed. Wrong password.' });
         }
         else{
+            /*
             // Se non ci siamo fermati sopra, vuol dire che l'utente è autenticato correttamente, quindi gli assegno un token
             var payload = {
                 id: data._id,
@@ -68,12 +69,18 @@ const authentication = async function (req, res) {
             //console.log("La chiave è = " + process.env.SUPER_SECRET);
             var token = jwt.sign(payload, process.env.SUPER_SECRET, options);   //process.env.SUPER_SECRET
 
+            */
+
+            //localStorage.setItem("username", data.username);
+
             res.json({
                 id: data._id,
                 username: data.username,
+                isPremium: data.isPremium,
+                hasPlayedDailyChallenge: data.hasPlayedDailyChallenge,
                 success: true,
                 message: 'Enjoy your token!',
-                token: token,   //Una stringa criptata da jwt
+                //token: token,   //Una stringa criptata da jwt
             });
         }
     }	

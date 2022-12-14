@@ -6,7 +6,7 @@ const nodemailer = require('nodemailer');
 //Elenco query con mongoose -> https://mongoosejs.com/docs/api.html#Mongoose
 //INSERIRE TUTTI GLI STATUS DI RETURN (ES 404 NOT FOUNT, 200 OK, ...)
 
-const getDatiUtente = (req, res) => {    
+const getDatiUtente = (req, res) => {        
     let username = req.params.username; //Prendi l'username per il quale filtrare, preso dall'URL anzichè dal body del json
     //console.log(req.params.username);
     //Trova l'user con l'username voluto
@@ -20,7 +20,11 @@ const getDatiUtente = (req, res) => {
 };
 
 const getCredenziali = (req, res) => {    
-    let email = req.params.setNuovaEmail; //Prendi l'username per il quale filtrare, preso dall'URL anzichè dal body del json
+
+    let email = req.params.email; //Prendi l'username per il quale filtrare, preso dall'URL anzichè dal body del json
+
+    console.log("Cerco utente con email = " + email);
+
     //console.log(req.params.username);
     //Trova l'user con l'username voluto
     //Per restituire anche la password, aggiungerla tra gli apici del findOne
@@ -146,7 +150,7 @@ const setDailyChallengePlayed = (req, res) => {
     });
 }
 
-const aggiornaPunteggio = (req, res) => {
+const aggiornaPunteggioTraining = (req, res) => {
     var username = req.params.username;
     var punteggio = req.params.punteggio;
     user.findOne({ username: req.params.username }, 'statisticheUtente', (err, stats) => {
@@ -174,11 +178,12 @@ const aggiornaPunteggio = (req, res) => {
 //export controller functions
 module.exports = {
     getDatiUtente,
+    getCredenziali,
     getStatisticheUtente,
     sendEmail,
     setNuovaEmail,
     setNuovaPassword,
     upgradePremium,
     setDailyChallengePlayed,
-    aggiornaPunteggio
+    aggiornaPunteggioTraining
 };

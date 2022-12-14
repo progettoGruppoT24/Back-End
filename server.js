@@ -7,6 +7,7 @@ const dotenv = require('dotenv').config();  //per usare le variabili di ambiente
 const express = require('express');         //importo express per comunicare col db e gestire il backend
 const app = express();                      //dichiaro l'applicazione come tipo express
 const cors = require('cors');
+const tokenChecker = require('./cestino/tokenCheckerC');
 
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');  //Specifico che la documentazione verrà fatta in json
@@ -27,6 +28,7 @@ app.use('/', routesLoggedUser);                           //posso utilizzare tut
 app.use('/', routesUnloggedUser);       
 app.use('/', routesSimbolo);
 app.use('/', routesSfidaGiornaliera);
+//app.use('./routes/loggedUserR', tokenChecker);
 
 //connessione al DB
 mongoose.connect(

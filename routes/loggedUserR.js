@@ -4,7 +4,7 @@ const router = express.Router();
 
 const userController = require('../controllers/loggedUserC');
 
-router.get('/getDatinUtente/:username', userController.getDatiUtente); //datiUtente
+router.get('/getDatiUtente/:username', userController.getDatiUtente); //datiUtente
 
 router.get('/getCredenziali/:email', userController.getCredenziali); //datiUtente
 
@@ -20,7 +20,7 @@ router.patch('/upgradePremium/:username', userController.upgradePremium);
 
 router.patch('/setDailyChallengePlayed/:username', userController.setDailyChallengePlayed);
 
-router.patch('/aggiornaPunteggio/:username/:punteggio', userController.aggiornaPunteggio);
+router.patch('/aggiornaPunteggioTraining/:username/:punteggio', userController.aggiornaPunteggioTraining);
 
 
 module.exports = router; // export to use in server.js
