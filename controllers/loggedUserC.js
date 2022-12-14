@@ -186,6 +186,46 @@ const aggiornaPunteggioTraining = (req, res) => {
     });
 }
 
+const aggiornaStatsSfidaGiornaliera = (req, res) => {
+    var username = req.params.username;
+    var result = req.params.result;
+    user.findOne({ username: username }, 'statisticheUtente', (err, stats) => {
+        if (err) {
+            return res.json({ message: "Errore" });
+        } else {
+            var giocate = stats.statisticheUtente.sfideGiornaliereGiocate+1;
+            var vinte = stats.statisticheUtente.sfideGiornaliereVinte+1;
+            if(result=="sfidaVinta"){
+                stats.sfideGiornaliereGiocate++;
+                console.log("true");
+                user.findOneAndUpdate({ username: username }, { $set: {"statisticheUtente.sfideGiornaliereGiocate": giocate,  "statisticheUtente.sfideGiornaliereVinte": vinte} }, { new: true }, (err, newPunt) => {
+                    if (err) {
+                        return res.json({ message: "Errore" });
+                    } else {
+                        res.send({
+                            statusCode: 200,
+                            message: `Punteggio giocate e vinte updated`
+                        })
+                    }
+                });
+            }
+            else{
+                console.log("false");
+                user.findOneAndUpdate({ username: req.params.username }, { $set: {"statisticheUtente.sfideGiornaliereGiocate": giocate} }, { new: true }, (err, newPunt) => {
+                    if (err) {
+                        return res.json({ message: "Errore" });
+                    } else {
+                        res.send({
+                            statusCode: 200,
+                            message: `Punteggio giocate updated`
+                        })
+                    }
+                });
+            }
+        }
+    });
+}
+
 //export controller functions
 module.exports = {
     getDatiUtente,
@@ -196,5 +236,6 @@ module.exports = {
     setNuovaPassword,
     upgradePremium,
     setDailyChallengePlayed,
-    aggiornaPunteggioTraining
+    aggiornaPunteggioTraining,
+    aggiornaStatsSfidaGiornaliera
 };

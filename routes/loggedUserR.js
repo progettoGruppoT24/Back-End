@@ -22,5 +22,6 @@ router.patch('/setDailyChallengePlayed/:username', userController.setDailyChalle
 
 router.patch('/aggiornaPunteggioTraining/:username/:punteggio', userController.aggiornaPunteggioTraining);
 
+router.patch('/aggiornaStatsSfidaGiornaliera/:username/:result', userController.aggiornaStatsSfidaGiornaliera);
 
 module.exports = router; // export to use in server.js
