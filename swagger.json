@@ -11,19 +11,20 @@
     "tags": [
       {
         "name": "Lorenzo D'Ambrosio, Andrea Goldoni, Marco Murru",
-        "description": "API for users in the system"
+        "description": "API for users in the system",
+        "group": "T-24"
       }
     ],
     "schemes": ["http"],
     "consumes": ["application/json"],
     "produces": ["application/json"],
     "paths": {
-        "/user": {
-            "get": {
+        "/signUp": {
+            "post": {
                 "tags": [
                     "Users"
                 ],
-                "summary": "Get all users",
+                "summary": "Register a user in the system",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -47,5 +48,5 @@
             }
         }
     }   
-  }
+}
   

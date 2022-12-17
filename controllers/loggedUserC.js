@@ -13,9 +13,19 @@ const getDatiUtente = (req, res) => {
     //Per restituire anche la password, aggiungerla tra gli apici del findOne
     user.findOne({ username: username }, 'username email nation isPremium', (err, data) => {
         if (err || !data) {
-            return res.json({success: false, message: "L'utente cercato non esiste.", dati: null });
+            return res.json({
+                success: false,
+                statusCode: 404,
+                message: 'User not found',
+                dati: null
+            });
         }
-        else return res.json({success: true, messagge: "Ecco i dati richiesti", dati: data}); 
+        else return res.json({
+            success: true,
+            statusCode: 200,
+            message: "Here is the user's data",
+            dati: data
+        });
     });
 };
 
@@ -25,14 +35,21 @@ const getCredenziali = (req, res) => {
 
     console.log("Cerco utente con email = " + email);
 
-    //console.log(req.params.username);
-    //Trova l'user con l'username voluto
-    //Per restituire anche la password, aggiungerla tra gli apici del findOne
     user.findOne({ email: email }, 'username password', (err, data) => {
         if (err || !data) {
-            return res.json({success: false, message: "L'email cercato non esiste.", dati: null });
+            return res.json({
+                success: false,
+                statusCode: 404,
+                message: 'The searched e-mail does not exist.',
+                dati: null
+            });
         }
-        else return res.json({success: true, messagge: "Ecco i dati richiesti", dati: data}); 
+        else return res.json({
+            success: true,
+            statusCode: 200,
+            message: "Here are the required credentials",
+            dati: data
+        });
     });
 };
 
@@ -42,9 +59,19 @@ const getStatisticheUtente = (req, res) => {
     //Trova l'user con l'username voluto
     user.findOne({ username: username }, 'statisticheUtente', (err, data) => {
         if (err || !data) {
-            return res.json({ success: false, message: "L'utente cercato non esiste.", dati: null});
+            return res.json({
+                success: false,
+                statusCode: 404,
+                message: 'User not found',
+                dati: null
+            });
         }
-        else return res.json({success: true, messagge: "Ecco le statistiche richieste", dati: data}); 
+        else return res.json({
+            success: true,
+            statusCode: 200,
+            message: "Here are the required statistics",
+            dati: data
+        });
     });
 };
 
@@ -52,12 +79,16 @@ const getStatisticheUtente = (req, res) => {
 const setNuovaEmail = (req, res) => {
     user.findOneAndUpdate({ username: req.params.username }, { $set: {email: req.params.email} }, { new: true }, (err, newEmail) => {
         if (err) {
-            return res.json({ success: false, message: "Errore" });
+            return res.json({
+                success: false,
+                statusCode: 304,
+                message: 'It was not possible to update the e-mail'
+            });
         } else {
             res.json({
                 success: true,
                 statusCode: 200,
-                message: "Email changed."
+                message: "Email updated."
             })
         }
     });
@@ -67,24 +98,38 @@ const setNuovaPassword = (req, res) => {
 
     user.findOne({ username: req.params.username }, 'password', (err, data) => {
         if (err || !data) {
-            return res.json({success: false, message: "L'utente cercato non esiste", dati: null });
+            return res.json({
+                success: false,
+                statusCode: 404,
+                message: 'User not found',
+                dati: null
+            });
         }
         else{
             if(data.password == req.body.vecchiaPassword){
                 user.findOneAndUpdate({ username: req.params.username }, { $set: {password: req.params.password} }, { new: true }, (err, newPass) => {
                     if (err) {
-                        return res.json({ success: false, message: "Errore nella modifica della password", dati: null });
+                        return res.json({
+                            success: false,
+                            statusCode: 304,
+                            message: 'It was not possible to update the password'
+                        });
                     } else {
                         return res.json({
                             success: true,
                             statusCode: 200,
-                            message: "Password cambiata correttamente"
+                            message: "Password updated"
                         })
                     }
                 });
             }
             else{
-                return res.json({success: false, message: "La vecchia password non corrisponde a quella inserita", dati: null });
+                return res.json({
+                    success: true,
+                    statusCode: 403,
+                    message: "The old password and the new one do not match.",
+                    dati: null
+                })
             }
         } 
     });
@@ -112,12 +157,16 @@ const sendEmail = (req, res) => {
     
     mailTransporter.sendMail(mailDetails, function(err, data) {
         if(err) {
-            return res.json({ success: false, message: "Errore" });
+            return res.json({
+                success: false, 
+                statusCode: 502,
+                message: 'Error' 
+            });
         } else {
             res.json({
                 success: true,
                 statusCode: 200,
-                message: "Email sent"
+                message: 'Email sent'
             });
         }
     });
@@ -126,12 +175,16 @@ const sendEmail = (req, res) => {
 const upgradePremium = (req, res) => {
     user.findOneAndUpdate({ username: req.params.username }, { $set: {isPremium: true} }, { new: true }, (err, newPass) => {
         if (err) {
-            return res.json({ success: false, message: "Errore" });
+            return res.json({ 
+                success: false,
+                statusCode: 304,
+                message: 'It was not possible to upgrade the user'
+            });
         } else {
-            res.send({
+            return res.json({
                 success: true,
                 statusCode: 200,
-                message: `User now is premium`
+                message: `The user is now a premium user`
             });
         }
     });
@@ -140,20 +193,34 @@ const upgradePremium = (req, res) => {
 const setDailyChallengePlayed = (req, res) => {
     user.findOne({ username: req.params.username }, 'username hasPlayedDailyChallenge', (err, data) => {
         if (err || !data) {
-            return res.json({success: false, message: "L'utente cercato non esiste.", dati: null });
+            return res.json({
+                success: false, 
+                statusCode: 404,
+                message: 'User not found'
+            });
         }
         else{
             if(data.hasPlayedDailyChallenge)
-                return res.json({message: "already_played"});
+                return res.json({
+                    success: true,
+                    statusCode: 200,
+                    message: "already_played"
+                });
             else{
                 user.findOneAndUpdate({ username: req.params.username }, { $set: {hasPlayedDailyChallenge: true} }, { new: true }, (err, result) => {
                     if (err) {
-                        return res.json({ message: "Errore" });
-                    } else {
-                        res.send({
+                        return res.json({ 
+                            success: false,
+                            statusCode: 304,
+                            message: 'The status of the daily challenge could not be updated'
+                        });
+                    }
+                    else {
+                        res.json({
+                            success: true,
                             statusCode: 200,
                             message: `User has played daily challenge`
-                        })
+                        });
                     }
                 });
             }
@@ -165,23 +232,36 @@ const aggiornaPunteggioTraining = (req, res) => {
     var username = req.params.username;
     var punteggio = req.params.punteggio;
     user.findOne({ username: req.params.username }, 'statisticheUtente', (err, stats) => {
-        if (err) {
-            return res.json({ message: "Errore" });
+        if (err) { //se il giocatore non esiste (non viene trovato)
+            return res.json({
+                success: false,
+                statusCode: 404,
+                message: `User not found`
+            });
         } else {
             if(stats.statisticheUtente.punteggioTraining<punteggio){
                 user.findOneAndUpdate({ username: req.params.username }, { $set: {"statisticheUtente.punteggioTraining": punteggio } }, { new: true }, (err, newPunt) => {
-                    if (err) {
-                        return res.json({ message: "Errore" });
+                    if (err) { //se c'è stato un errore nel aggiornare le statistiche dell'utente
+                        return res.json({ 
+                            success: false,
+                            statusCode: 304,
+                            message: 'The player statistics could not be updated'
+                        });
                     } else {
-                        res.send({
+                        return res.json({  //statistiche aggiornate con successo
+                            success: true,
                             statusCode: 200,
-                            message: `Punteggio updated`
-                        })
+                            message: 'Score updated'
+                        });
                     }
                 });
             }
             else
-                return res.json({ message: "Punteggio not updated"});
+                return res.json({  //successo, ma non era necessario aggiornare le statistiche
+                            success: true,
+                            statusCode: 200,
+                            message: 'Score not updated'
+                        });
         }
     });
 }
@@ -191,7 +271,11 @@ const aggiornaStatsSfidaGiornaliera = (req, res) => {
     var result = req.params.result;
     user.findOne({ username: username }, 'statisticheUtente', (err, stats) => {
         if (err) {
-            return res.json({ message: "Errore" });
+            return res.json({ 
+                success: false,
+                statusCode: 404,
+                message: 'User not found'
+            });
         } else {
             var giocate = stats.statisticheUtente.sfideGiornaliereGiocate+1;
             var vinte = stats.statisticheUtente.sfideGiornaliereVinte+1;
@@ -200,12 +284,17 @@ const aggiornaStatsSfidaGiornaliera = (req, res) => {
                 console.log("true");
                 user.findOneAndUpdate({ username: username }, { $set: {"statisticheUtente.sfideGiornaliereGiocate": giocate,  "statisticheUtente.sfideGiornaliereVinte": vinte} }, { new: true }, (err, newPunt) => {
                     if (err) {
-                        return res.json({ message: "Errore" });
+                        return res.json({ 
+                            success: false,
+                            statusCode: 304,
+                            message: 'The player statistics could not be updated'
+                        });
                     } else {
-                        res.send({
+                        return res.json({
+                            success: true,
                             statusCode: 200,
-                            message: `Punteggio giocate e vinte updated`
-                        })
+                            message: 'Score updated'
+                        });
                     }
                 });
             }
@@ -213,12 +302,17 @@ const aggiornaStatsSfidaGiornaliera = (req, res) => {
                 console.log("false");
                 user.findOneAndUpdate({ username: req.params.username }, { $set: {"statisticheUtente.sfideGiornaliereGiocate": giocate} }, { new: true }, (err, newPunt) => {
                     if (err) {
-                        return res.json({ message: "Errore" });
+                        return res.json({ 
+                            success: false,
+                            statusCode: 304,
+                            message: 'The player statistics could not be updated'
+                        });
                     } else {
-                        res.send({
+                        return res.json({
+                            success: true,
                             statusCode: 200,
-                            message: `Punteggio giocate updated`
-                        })
+                            message: 'Score updated'
+                        });
                     }
                 });
             }

@@ -19,17 +19,36 @@ const signUp = (req, res) => {
 
             // Viene salvato l'user nel database
             newUser.save((err, data) => {
-                if (err) return res.json({ Error: err });
-                return res.json({success: true, message: "Inserito utente: " + data});
+                if (err) return res.json({
+                    success: false,
+                    statusCode: 500,
+                    message: 'Error in saving the user',
+                    dati: null
+                });
+                return res.json({
+                    success: true,
+                    statusCode: 200,
+                    message: 'User successfully inserted',
+                    dati: data
+                });
             })
             
         } else {
             if (err) {
-                //Se c'è un errore nella query
-                return res.json({success: false, message: "Errore nella query. ${err}"});
+                return res.json({
+                    success: false,
+                    statusCode: 404,
+                    message: 'User not found',
+                    dati: null
+                });
             }
             //Se c'è l'username è già presente
-            return res.json({success: false, message: "Username già in uso" });
+            return res.json({
+                success: true,
+                statusCode: 403,
+                message: 'User already in use',
+                dati: null
+            });
         }
     })
 };
@@ -42,13 +61,22 @@ const authentication = async function (req, res) {
 
 	// Nel caso l'utente non venga trovato
 	if (!data) {
-		console.log("UTENTE NON TROVATO");
-		res.json({ success: false, message: 'Authentication failed. User not found.' });
+		return res.json({
+            success: false,
+            statusCode: 404,
+            message: 'User not found',
+            dati: null
+        });
 	}
     else{
         // Nel caso venga trovato un utente, si verifica che la password sia quella corretta
         if (data.password != req.body.password) {
-            res.json({ success: false, message: 'Authentication failed. Wrong password.' });
+            return res.json({
+                success: true,
+                statusCode: 403,
+                message: 'Password does not match',
+                dati: null
+            });
         }
         else{
             /*
@@ -73,12 +101,13 @@ const authentication = async function (req, res) {
 
             //localStorage.setItem("username", data.username);
 
-            res.json({
+            return res.json({
                 id: data._id,
                 username: data.username,
                 isPremium: data.isPremium,
                 hasPlayedDailyChallenge: data.hasPlayedDailyChallenge,
                 success: true,
+                statusCode: 200,
                 message: 'Enjoy your token!',
                 //token: token,   //Una stringa criptata da jwt
             });
@@ -90,9 +119,19 @@ const authentication = async function (req, res) {
 const getClassifica = (req, res) => {
     user.find({}, 'username nation statisticheUtente', (err, data) => {
         if (err) {
-            return res.json({ Error: err });
+            return res.json({
+                success: false,
+                statusCode: 500,
+                message: 'Error no data',
+                dati: null
+            });
         }
-        return res.json({"Classifica": data });
+        return res.json({
+            success: true,
+            statusCode: 200,
+            message: "Returned the user's ranking data.",
+            Classifica: data
+        });
     }).sort({"statisticheUtente.punteggioTraining": -1});
 };
 
@@ -102,9 +141,19 @@ const getGiocatoreClassifica = (req, res) => {
     //Trova l'user con l'username voluto
     user.findOne({ username: username }, 'username nation statisticheUtente', (err, data) => {
         if (err || !data) {
-            return res.json({ message: "L'utente cercato non esiste." });
+            return res.json({
+                success: false,
+                statusCode: 404,
+                message: 'User not found',
+                dati: null
+            });
         }
-        else return res.json(data); 
+        else return res.json({
+                success: true,
+                statusCode: 200,
+                message: "Returned the user's ranking data.",
+                dati: data
+            });
     });
 };
 

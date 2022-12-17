@@ -30,7 +30,17 @@ async function chooseRandomSimbolo (alf) {
 }
 
 async function  generaQuiz (req, res) {
-    var alfabeti = JSON.parse(req.query.alfabeto);
+    var alfabeti;
+    try{
+        alfabeti = JSON.parse(req.query.alfabeto);
+    }
+    catch(e){
+        return res.json({
+            success: false,
+            statusCode: 400,
+            message: 'Alphabet error'
+        });
+    }
     var indiceAlfabetoScelto = Math.floor(Math.random() * (alfabeti.length));
     
     var tipo = Math.floor(Math.random() * 3) + 1;
@@ -40,41 +50,49 @@ async function  generaQuiz (req, res) {
     var soluzione = "NULL";
     
     console.log("alfabeto: " + alfabeti[indiceAlfabetoScelto] + " tipo: " + tipo);
-    
-    if(tipo===1){
-        var simbolo = await chooseRandomSimbolo(alfabeti[indiceAlfabetoScelto]);
-        domanda = simbolo.carattereGiapponese;
-        soluzione = simbolo.valore;
+    try{
+        if(tipo===1){
+            var simbolo = await chooseRandomSimbolo(alfabeti[indiceAlfabetoScelto]);
+            domanda = simbolo.carattereGiapponese;
+            soluzione = simbolo.valore;
+        }
+        else if(tipo===2){
+            var simbolo = await chooseRandomSimbolo(alfabeti[indiceAlfabetoScelto]);
+            domanda = simbolo.valore;
+            soluzione = simbolo.carattereGiapponese;
+            opzione.push(simbolo.carattereGiapponese);
+            
+            simbolo = await chooseRandomSimbolo(alfabeti[indiceAlfabetoScelto]);
+            opzione.push(simbolo.carattereGiapponese);
+            
+            simbolo = await chooseRandomSimbolo(alfabeti[indiceAlfabetoScelto]);
+            opzione.push(simbolo.carattereGiapponese);
+            
+            simbolo = await chooseRandomSimbolo(alfabeti[indiceAlfabetoScelto]);
+            opzione.push(simbolo.carattereGiapponese);
+        }
+        else{
+            var simbolo = await chooseRandomSimbolo(alfabeti[indiceAlfabetoScelto]);
+            domanda = simbolo.carattereGiapponese;
+            soluzione = simbolo.valore;
+            opzione.push(simbolo.valore);
+            
+            simbolo = await chooseRandomSimbolo(alfabeti[indiceAlfabetoScelto]);
+            opzione.push(simbolo.valore);
+            
+            simbolo = await chooseRandomSimbolo(alfabeti[indiceAlfabetoScelto]);
+            opzione.push(simbolo.valore);
+            
+            simbolo = await chooseRandomSimbolo(alfabeti[indiceAlfabetoScelto]);
+            opzione.push(simbolo.valore);
+        }
     }
-    else if(tipo===2){
-        var simbolo = await chooseRandomSimbolo(alfabeti[indiceAlfabetoScelto]);
-        domanda = simbolo.valore;
-        soluzione = simbolo.carattereGiapponese;
-        opzione.push(simbolo.carattereGiapponese);
-        
-        simbolo = await chooseRandomSimbolo(alfabeti[indiceAlfabetoScelto]);
-        opzione.push(simbolo.carattereGiapponese);
-        
-        simbolo = await chooseRandomSimbolo(alfabeti[indiceAlfabetoScelto]);
-        opzione.push(simbolo.carattereGiapponese);
-        
-        simbolo = await chooseRandomSimbolo(alfabeti[indiceAlfabetoScelto]);
-        opzione.push(simbolo.carattereGiapponese);
-    }
-    else{
-        var simbolo = await chooseRandomSimbolo(alfabeti[indiceAlfabetoScelto]);
-        domanda = simbolo.carattereGiapponese;
-        soluzione = simbolo.valore;
-        opzione.push(simbolo.valore);
-        
-        simbolo = await chooseRandomSimbolo(alfabeti[indiceAlfabetoScelto]);
-        opzione.push(simbolo.valore);
-        
-        simbolo = await chooseRandomSimbolo(alfabeti[indiceAlfabetoScelto]);
-        opzione.push(simbolo.valore);
-        
-        simbolo = await chooseRandomSimbolo(alfabeti[indiceAlfabetoScelto]);
-        opzione.push(simbolo.valore);
+    catch(e){
+        return res.json({
+            success: false,
+            statusCode: 500,
+            message: 'Error in generating the quiz'
+        });
     }
     
     shuffle(opzione);
@@ -87,7 +105,12 @@ async function  generaQuiz (req, res) {
         soluzione: soluzione
     });
     
-    return res.json(newQuiz);
+    return res.json({
+        success: true,
+        statusCode: 200,
+        message: 'Quiz generated successfully',
+        newQuiz
+    });
 }
 
 
