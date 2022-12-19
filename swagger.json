@@ -22,14 +22,1246 @@
         "/signUp": {
             "post": {
                 "tags": [
-                    "Users"
+                    "User"
                 ],
                 "summary": "Register a user in the system",
+                "parameters" : [{
+                    "in" : "body",
+                    "name" : "Registration data",
+                    "description" : "The information about the new user to be created",
+                    "schema" : {
+                        "type" : "object",
+                        "properties":{
+                                "username":{
+                                    "type": "string",
+                                    "example" : "topolino2003"
+                                },
+                                "email":{
+                                    "type": "string",
+                                    "example" : "topogigio@gmail.com"
+                                },
+                                "password":{
+                                    "type": "string",
+                                    "example" : "CIAOTOPOGIGIO"
+                                },
+                                "nation":{
+                                    "type": "string",
+                                    "example" : "Africa"
+                                }
+                        }
+                    }
+                }],
                 "responses": {
                     "200": {
-                        "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/User"
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "example": "true"
+                                },
+                                "statusCode": {
+                                    "type": "number",
+                                    "example": "200"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "User successfully inserted"
+                                },
+                                "dati": {
+                                    "type": "object",
+                                    "required": [
+                                        "username",
+                                        "email",
+                                        "password",
+                                        "nation"
+                                    ],
+                                    "properties": {
+                                        "username": {
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        },
+                                        "password": {
+                                            "type": "string"
+                                        },
+                                        "nation": {
+                                            "type": "string"
+                                        },
+                                        "isPremium": {
+                                            "type": "boolean"
+                                        },
+                                        "hasPlayedDailyChallenge": {
+                                            "type": "boolean"
+                                        },
+                                        "statisticheUtente": {
+                                            "type": "object",
+                                            "properties": {
+                                                "sfideGiornaliereGiocate": {
+                                                    "type": "number"
+                                                },
+                                                "sfideGiornaliereVinte": {
+                                                    "type": "number"
+                                                },
+                                                "punteggioTraining": {
+                                                    "type": "number"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "example": "false"
+                                },
+                                "statusCode": {
+                                    "type": "number",
+                                    "example": "403"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "User already in use"
+                                },
+                                "dati": {
+                                    "type": "object",
+                                    "example": "null"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "example": "false"
+                                },
+                                "statusCode": {
+                                    "type": "number",
+                                    "example": "500"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Error in saving the user"
+                                },
+                                "dati": {
+                                    "type": "object",
+                                    "example": "null"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Allows a user to log in",
+                "parameters" : [{
+                    "in" : "body",
+                    "name" : "Login data",
+                    "description" : "Login information",
+                    "schema" : {
+                        "type" : "object",
+                        "properties":{
+                                "username":{
+                                    "type": "string",
+                                    "example" : "topolino2003"
+                                },
+                                "password":{
+                                    "type": "string",
+                                    "example" : "CIAOTOPOGIGIO"
+                                }
+                        }
+                    }
+                }],
+                "responses": {
+                    "404": {
+                        "schema": {
+                            "properties":{
+                                "success": {
+                                    "type": "boolean",
+                                    "example": "false"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "User not found"
+                                },
+                                "statusCode": {
+                                    "type": "number",
+                                    "example": "404"
+                                },
+                                "dati": {
+                                    "type": "object",
+                                    "example": "null"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "schema": {
+                            "properties":{
+                                "success": {
+                                    "type": "boolean",
+                                    "example": "true"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Password does not match"
+                                },
+                                "statusCode": {
+                                    "type": "number",
+                                    "example": "403"
+                                },
+                                "dati": {
+                                    "type": "object",
+                                    "example": "null"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "schema": {
+                            "properties":{
+                                "statusCode": {
+                                    "type": "number",
+                                    "example": "200"
+                                },
+                                "success": {
+                                    "type": "boolean",
+                                    "example": "true"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Enjoy your token!"
+                                },
+                                "id": {
+                                    "type": "string"
+                                },
+                                "username": {
+                                    "type": "string"
+                                },
+                                "isPremium": {
+                                    "type": "boolean"
+                                },
+                                "hasPlayedDailyChallenge": {
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/getClassifica": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get the ranking data of all users",
+                "responses": {
+                    "500": {
+                        "schema": {
+                            "properties":{
+                                "success": {
+                                    "type": "boolean",
+                                    "example": "false"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Error no data"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "schema": {
+                            "type": "object",
+                            "properties":{
+                                "success": {
+                                    "type": "boolean",
+                                    "example": "false"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Error no data"
+                                },
+                                "Classifica": {
+                                    "type": "array",
+                                    "items": { 
+                                        "properties": {
+                                            "username": {
+                                                "type": "string"
+                                            },
+                                            "nation": {
+                                                "type": "string"
+                                            },
+                                            "statisticheUtente": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "sfideGiornaliereGiocate": {
+                                                        "type": "number"
+                                                    },
+                                                    "sfideGiornaliereVinte": {
+                                                        "type": "number"
+                                                    },
+                                                    "punteggioTraining": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }   
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/getGiocatoreClassifica/{username}": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get the ranking information of a specific player",
+                "parameters" : [{
+                    "in" : "path",
+                    "name" : "username",
+                    "description" : "User to search",
+                    "type": "string"
+                }],
+                "responses": {
+                    "404": {
+                        "schema": {
+                            "properties":{
+                                "success": {
+                                    "type": "boolean",
+                                    "example": "false"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "User not found"
+                                },
+                                "statusCode": {
+                                    "type": "number",
+                                    "example": "404"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "example": "true"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Returned the user's ranking data."
+                                },
+                                "statusCode": {
+                                    "type": "number",
+                                    "example": "200"
+                                },
+                                "dati": {
+                                    "properties": {
+                                        "username": {
+                                            "type": "string"
+                                        },
+                                        "nation": {
+                                            "type": "string"
+                                        },
+                                        "statisticheUtente": {
+                                            "type": "object",
+                                            "properties": {
+                                                "sfideGiornaliereGiocate": {
+                                                    "type": "number"
+                                                },
+                                                "sfideGiornaliereVinte": {
+                                                    "type": "number"
+                                                },
+                                                "punteggioTraining": {
+                                                    "type": "number"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/getDatiUtente/{username}": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get the user's information",
+                "parameters" : [{
+                    "in" : "path",
+                    "name" : "username",
+                    "description" : "User to search",
+                    "type": "string"
+                }],
+                "responses": {
+                    "404": {
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "example": "false"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "User not found"
+                                },
+                                "statusCode": {
+                                    "type": "number",
+                                    "example": "404"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "example": "true"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Here is the user's data"
+                                },
+                                "statusCode": {
+                                    "type": "number",
+                                    "example": "200"
+                                },
+                                "dati": {
+                                    "type": "object",
+                                    "properties": {
+                                        "username": {
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        },
+                                        "nation": {
+                                            "type": "string"
+                                        },
+                                        "isPremium": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/getCredenziali/{email}": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get user credentials",
+                "parameters" : [{
+                    "in" : "path",
+                    "name" : "email",
+                    "description" : "Email to search",
+                    "type": "string"
+                }],
+                "responses": {
+                    "404": {
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "example": "false"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "User not found"
+                                },
+                                "statusCode": {
+                                    "type": "number",
+                                    "example": "404"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "example": "true"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Here are the required credentials"
+                                },
+                                "statusCode": {
+                                    "type": "number",
+                                    "example": "200"
+                                },
+                                "dati": {
+                                    "type": "object",
+                                    "properties": {
+                                        "username": {
+                                            "type": "string"
+                                        },
+                                        "password": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/getStatisticheUtente/{username}": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get user statistics",
+                "parameters" : [{
+                    "in" : "path",
+                    "name" : "username",
+                    "description" : "User to search",
+                    "type": "string"
+                }],
+                "responses": {
+                    "404": {
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "example": "false"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "User not found"
+                                },
+                                "statusCode": {
+                                    "type": "number",
+                                    "example": "404"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "success": "true",
+                        "message": "Here are the required statistics",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "example": "true"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Here are the required statistics"
+                                },
+                                "statusCode": {
+                                    "type": "number",
+                                    "example": "200"
+                                },
+                                "dati":{
+                                    "properties":{
+                                        "statisticheUtente": {
+                                            "type": "object",
+                                            "properties": {
+                                                "sfideGiornaliereGiocate": {
+                                                    "type": "number"
+                                                },
+                                                "sfideGiornaliereVinte": {
+                                                    "type": "number"
+                                                },
+                                                "punteggioTraining": {
+                                                    "type": "number"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/sendEmail": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Send an e-mail with JGuesser e-mail",
+                "parameters" : [{
+                    "in" : "body",
+                    "name" : "E-mail data",
+                    "description" : "Information needed to send the e-mail",
+                    "schema" : {
+                        "type" : "object",
+                        "properties":{
+                                "destinatario":{
+                                    "type": "string",
+                                    "example" : "marcoetula0205@gmail.com"
+                                },
+                                "titolo":{
+                                    "type": "string",
+                                    "example" : "JSardiniaGuesser"
+                                },
+                                "testo":{
+                                    "type": "string",
+                                    "example" : "Ciao Marco è JGuesser che ti parla. Se stai ricevendo questa e-mail significa che la Sardegna è una bella isola."
+                                }
+                        }
+                    }
+                }],
+                "responses": {
+                    "502": {
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "example": "false"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Error"
+                                },
+                                "statusCode": {
+                                    "type": "number",
+                                    "example": "502"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "example": "true"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Email sent"
+                                },
+                                "statusCode": {
+                                    "type": "number",
+                                    "example": "200"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/setNuovaEmail/{username}/{email}": {
+            "patch": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Set a new e-mail for the user",
+                "parameters" : [
+                    {
+                        "in" : "path",
+                        "name" : "username",
+                        "description" : "User to change e-mail to"
+                    },
+                    {
+                        "in" : "path",
+                        "name" : "email",
+                        "description" : "New e-mail"
+                    }
+                ],
+                "responses": {
+                    "304": {
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "example": "false"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "It was not possible to update the e-mail"
+                                },
+                                "statusCode": {
+                                    "type": "number",
+                                    "example": "304"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "example": "true"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Email updated."
+                                },
+                                "statusCode": {
+                                    "type": "number",
+                                    "example": "200"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/setNuovaPassword/{username}/{password}": {
+            "patch": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Change user's password",
+                "parameters" : [
+                    {
+                        "in" : "path",
+                        "name" : "username",
+                        "type" : "string",
+                        "description" : "User to change e-mail to"
+                    },
+                    {
+                        "in" : "path",
+                        "name" : "password",
+                        "type" : "string",
+                        "description" : "New password"
+                    },
+                    {
+                        "in" : "body",
+                        "name" : "Old password",
+                        "description" : "Old password",
+                        "schema" : {
+                            "type" : "object",
+                            "properties":{
+                                    "vecchiaPassword":{
+                                        "type": "string"
+                                    }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "example": "false"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "User not found"
+                                },
+                                "statusCode": {
+                                    "type": "number",
+                                    "example": "404"
+                                }
+                            }
+                        }
+                    },
+                    "304": {
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "example": "false"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "It was not possible to update the password"
+                                },
+                                "statusCode": {
+                                    "type": "number",
+                                    "example": "304"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "example": "true"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Password updated"
+                                },
+                                "statusCode": {
+                                    "type": "number",
+                                    "example": "200"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "example": "true"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "The old password and the new one do not match."
+                                },
+                                "statusCode": {
+                                    "type": "number",
+                                    "example": "403"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/upgradePremium/{username}": {
+            "patch": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update user privileges",
+                "parameters" : [
+                    {
+                        "in" : "path",
+                        "name" : "username",
+                        "description" : "Username of the user upgrading to premium"
+                    }
+                ],
+                "responses": {
+                    "304": {
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "example": "false"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "It was not possible to upgrade the user"
+                                },
+                                "statusCode": {
+                                    "type": "number",
+                                    "example": "304"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "example": "true"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "The user is now a premium user"
+                                },
+                                "statusCode": {
+                                    "type": "number",
+                                    "example": "200"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/setDailyChallengePlayed/{username}": {
+            "patch": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update the daily challenge status for a user",
+                "parameters" : [
+                    {
+                        "in" : "path",
+                        "name" : "username",
+                        "description" : "Username of the user to set the daily challenge to."
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "example": "false"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "User not found"
+                                },
+                                "statusCode": {
+                                    "type": "number",
+                                    "example": "404"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "example": "true"
+                                },
+                                "message": {
+                                    "type": "string"
+                                },
+                                "statusCode": {
+                                    "type": "number",
+                                    "example": "200"
+                                }
+                            }
+                        }
+                    },
+                    "304": {
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "example": "false"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "The status of the daily challenge could not be updated"
+                                },
+                                "statusCode": {
+                                    "type": "number",
+                                    "example": "304"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/aggiornaPunteggioTraining/{username}/{punteggio}": {
+            "patch": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update a user's training scores",
+                "parameters" : [
+                    {
+                        "in" : "path",
+                        "name" : "username",
+                        "description" : "Username of the user to update the score"
+                    },
+                    {
+                        "in" : "path",
+                        "name" : "punteggio",
+                        "description" : "Score to be entered maybe"
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "example": "false"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "User not found"
+                                },
+                                "statusCode": {
+                                    "type": "number",
+                                    "example": "404"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "example": "true"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Score updated"
+                                },
+                                "statusCode": {
+                                    "type": "number",
+                                    "example": "200"
+                                }
+                            }
+                        }
+                    },
+                    "304": {
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "example": "false"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "The player statistics could not be updated"
+                                },
+                                "statusCode": {
+                                    "type": "number",
+                                    "example": "304"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/aggiornaStatsSfidaGiornaliera/{username}/{result}": {
+            "patch": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update daily challenge scores",
+                "parameters" : [
+                    {
+                        "in" : "path",
+                        "name" : "username",
+                        "description" : "Username of the user to update the score"
+                    },
+                    {
+                        "in" : "path",
+                        "name" : "result",
+                        "description" : "Result of whether or not the daily challenge was won"
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "example": "false"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "User not found"
+                                },
+                                "statusCode": {
+                                    "type": "number",
+                                    "example": "404"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "example": "true"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Score updated"
+                                },
+                                "statusCode": {
+                                    "type": "number",
+                                    "example": "200"
+                                }
+                            }
+                        }
+                    },
+                    "304": {
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "example": "false"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "The player statistics could not be updated"
+                                },
+                                "statusCode": {
+                                    "type": "number",
+                                    "example": "304"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/generaQuiz": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Generate a quiz",
+                "parameters" : [
+                    {
+                        "in" : "query",
+                        "name" : "alfabeto",
+                        "type" : "string",
+                        "example": "[\"Hiragana\", \"Katakana\"]",
+                        "description" : "Alphabets selected to generate the quiz"
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "example": "false"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Alphabet error"
+                                },
+                                "statusCode": {
+                                    "type": "number",
+                                    "example": "400"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "example": "false"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Error in generating the quiz"
+                                },
+                                "statusCode": {
+                                    "type": "number",
+                                    "example": "500"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "example": "true"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Quiz generated successfully"
+                                },
+                                "statusCode": {
+                                    "type": "number",
+                                    "example": "200"
+                                },
+                                "newQuiz": {
+                                    "properties": {
+                                        "tipo": {
+                                            "type": "number",
+                                            "example": "2"
+                                        },
+                                        "domanda": {
+                                            "type": "string",
+                                            "example": "シャ"  
+                                        },
+                                        "alfabeto": {
+                                            "type": "string",
+                                            "example": "Katakana"  
+                                        },
+                                        "opzione": {
+                                            "type": "array",
+                                            "items": {
+                                            }
+                                        },
+                                        "soluzione": {
+                                            "type": "string",
+                                            "example": "sha"  
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/getSfidaGiornaliera": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get or generate daily challenge",
+                "responses": {
+                    "500": {
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "example": "false"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Error"
+                                },
+                                "statusCode": {
+                                    "type": "number",
+                                    "example": "500"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "example": "true"
+                                },
+                                "message": {
+                                    "type": "string"
+                                },
+                                "statusCode": {
+                                    "type": "number",
+                                    "example": "200"
+                                },
+                                "Sfida": {
+                                    "$ref": "#/definitions/SfidaGiornaliera"
+                                }
+                            }
                         }
                     }
                 }
@@ -39,12 +1271,98 @@
     "definitions": {
         "User": {
             "required": [
-                "Username"
+                "username",
+                "email",
+                "password",
+                "nation"
             ],
             "properties": {
-                "Username": {
+                "username": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "nation": {
+                    "type": "string"
+                },
+                "isPremium": {
+                    "type": "boolean", "example": "false"
+                },
+                "hasPlayedDailyChallenge": {
+                    "type": "boolean", "example": "false"
+                },
+                "statisticheUtente": {
+                    "type": "object",
+                    "properties": {
+                        "sfideGiornaliereGiocate": {
+                            "type": "number", "example": "0"
+                        },
+                        "sfideGiornaliereVinte": {
+                            "type": "number", "example": "0"
+                        },
+                        "punteggioTraining": {
+                            "type": "number", "example": "0"
+                        }
+                    }
+                }
+            }
+        },
+        "SimboloAlfabeto": {
+            "required": [
+                "carattereGiapponese",
+                "valore",
+                "alfabeto"
+            ],
+            "properties": {
+                "carattereGiapponese": {
+                    "type": "string"
+                },
+                "valore": {
+                    "type": "string"
+                },
+                "alfabeto": {
                     "type": "string"
                 }
+            }
+        },
+        "Quiz": {
+            "properties": {
+                "tipo": {
+                    "type": "number"
+                },
+                "domanda": {
+                    "type": "string"
+                },
+                "alfabeto": {
+                    "type": "string"
+                },
+                "opzione": [{
+                    "type": "string"  
+                }],
+                "soluzione": {
+                    "type": "string"
+                }
+            }
+        },
+        "SfidaGiornaliera": {
+            "required": [
+                "tipoDiSfida",
+                "data"
+            ],
+            "properties": {
+                "tipoDiSfida": {
+                    "type": "number"
+                },
+                "data": {
+                    "type": "date"
+                },
+                "listaDiQuiz": [{
+                    "type": "object"
+                }]
             }
         }
     }   

@@ -232,7 +232,7 @@ const aggiornaPunteggioTraining = (req, res) => {
     var username = req.params.username;
     var punteggio = req.params.punteggio;
     user.findOne({ username: req.params.username }, 'statisticheUtente', (err, stats) => {
-        if (err) { //se il giocatore non esiste (non viene trovato)
+        if (err || !stats) { //se il giocatore non esiste (non viene trovato)
             return res.json({
                 success: false,
                 statusCode: 404,
@@ -270,7 +270,7 @@ const aggiornaStatsSfidaGiornaliera = (req, res) => {
     var username = req.params.username;
     var result = req.params.result;
     user.findOne({ username: username }, 'statisticheUtente', (err, stats) => {
-        if (err) {
+        if (err || !stats) {
             return res.json({ 
                 success: false,
                 statusCode: 404,

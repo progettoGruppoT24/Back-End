@@ -34,14 +34,6 @@ const signUp = (req, res) => {
             })
             
         } else {
-            if (err) {
-                return res.json({
-                    success: false,
-                    statusCode: 404,
-                    message: 'User not found',
-                    dati: null
-                });
-            }
             //Se c'è l'username è già presente
             return res.json({
                 success: true,
