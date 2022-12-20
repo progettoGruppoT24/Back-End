@@ -113,7 +113,7 @@ async function getSfidaGiornaliera(req, res) {
                 return res.json({
                     success: true,
                     statusCode: 200,
-                    message: 'New challenge generated',
+                    message: 'New challenge created',
                     Sfida: data
                 });
             })
