@@ -22,7 +22,7 @@
         "/signUp": {
             "post": {
                 "tags": [
-                    "User"
+                    "Guest"
                 ],
                 "summary": "Register a user in the system",
                 "parameters" : [{
@@ -163,7 +163,7 @@
         "/login": {
             "post": {
                 "tags": [
-                    "User"
+                    "Guest"
                 ],
                 "summary": "Allows a user to log in",
                 "parameters" : [{
@@ -265,7 +265,7 @@
         "/getClassifica": {
             "get": {
                 "tags": [
-                    "User"
+                    "Guest"
                 ],
                 "summary": "Get the ranking data of all users",
                 "responses": {
@@ -331,7 +331,7 @@
         "/getGiocatoreClassifica/{username}": {
             "get": {
                 "tags": [
-                    "User"
+                    "Guest"
                 ],
                 "summary": "Get the ranking information of a specific player",
                 "parameters" : [{
@@ -1124,7 +1124,7 @@
         "/generaQuiz": {
             "get": {
                 "tags": [
-                    "User"
+                    "Simbolo"
                 ],
                 "summary": "Generate a quiz",
                 "parameters" : [
@@ -1222,7 +1222,7 @@
         "/getSfidaGiornaliera": {
             "get": {
                 "tags": [
-                    "User"
+                    "Sfida giornaliera"
                 ],
                 "summary": "Get or generate daily challenge",
                 "responses": {
