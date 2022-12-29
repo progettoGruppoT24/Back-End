@@ -2,11 +2,10 @@
   "name": "jguesser",
   "version": "1.0.0",
   "description": "Progetto di IS",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
     "test": "jest --coverage",
-    "start": "node app.js",
-    "server": "node server.js"
+    "start": "node server.js"
   },
   "keywords": [
     "SE",
