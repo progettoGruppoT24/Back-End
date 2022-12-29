@@ -21,6 +21,7 @@ const routesSimbolo = require('./routes/simboloR');  // import the routes
 const routesSfidaGiornaliera = require('./routes/sfidaGiornalieraR');
 
 const mongoose = require('mongoose');           //import della libreria per gestire il db
+mongoose.set('strictQuery', false);
 app.use(express.json());                        //permette di utilizzare una libreria di json e quindi file json
 app.use(cors());
 app.use('/', routesLoggedUser);                           //posso utilizzare tutto il codice all'interno della cartella routes
