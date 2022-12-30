@@ -2,6 +2,8 @@ const { collection } = require('../models/sfidaGiornalieraM');
 const SfidaGiornaliera = require('../models/sfidaGiornalieraM');
 const User = require('../models/userM');
 const dotenv = require('dotenv').config();  //per usare le variabili di ambiente
+import fetch from 'node-fetch';
+
 
 
 //Elenco query con mongoose -> https://mongoosejs.com/docs/api.html#Mongoose
