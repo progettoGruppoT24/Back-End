@@ -4,9 +4,9 @@ const router = express.Router();
 
 const userController = require('../controllers/loggedUserC');
 
-router.get('/getDatiUtente/:username', userController.getDatiUtente); //datiUtente
+router.get('/getDatiUtente/:username', userController.getDatiUtente); 
 
-router.get('/getCredenziali/:email', userController.getCredenziali); //datiUtente
+router.get('/getCredenziali/:email', userController.getCredenziali); 
 
 router.get('/getStatisticheUtente/:username', userController.getStatisticheUtente);
 

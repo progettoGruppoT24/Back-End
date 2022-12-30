@@ -49,7 +49,7 @@ async function  generaQuiz (req, res) {
     var opzione = [];
     var soluzione = "NULL";
     
-    console.log("alfabeto: " + alfabeti[indiceAlfabetoScelto] + " tipo: " + tipo);
+    //console.log("alfabeto: " + alfabeti[indiceAlfabetoScelto] + " tipo: " + tipo);
     try{
         if(tipo===1){
             var simbolo = await chooseRandomSimbolo(alfabeti[indiceAlfabetoScelto]);

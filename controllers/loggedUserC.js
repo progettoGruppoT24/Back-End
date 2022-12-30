@@ -34,7 +34,7 @@ const getCredenziali = (req, res) => {
 
     let email = req.params.email; //Prendi l'username per il quale filtrare, preso dall'URL anzichè dal body del json
 
-    console.log("Cerco utente con email = " + email);
+    //console.log("Cerco utente con email = " + email);
 
     user.findOne({ email: email }, 'username password', (err, data) => {
         if (err || !data) {
@@ -282,7 +282,7 @@ const aggiornaStatsSfidaGiornaliera = (req, res) => {
             var vinte = stats.statisticheUtente.sfideGiornaliereVinte+1;
             if(result=="sfidaVinta"){
                 stats.sfideGiornaliereGiocate++;
-                console.log("true");
+                //console.log("true");
                 user.findOneAndUpdate({ username: username }, { $set: {"statisticheUtente.sfideGiornaliereGiocate": giocate,  "statisticheUtente.sfideGiornaliereVinte": vinte} }, { new: true }, (err, newPunt) => {
                     if (err) {
                         return res.json({ 
@@ -300,7 +300,7 @@ const aggiornaStatsSfidaGiornaliera = (req, res) => {
                 });
             }
             else{
-                console.log("false");
+                //console.log("false");
                 user.findOneAndUpdate({ username: req.params.username }, { $set: {"statisticheUtente.sfideGiornaliereGiocate": giocate} }, { new: true }, (err, newPunt) => {
                     if (err) {
                         return res.json({ 

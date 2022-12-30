@@ -46,7 +46,7 @@ async function getSfidaGiornaliera(req, res) {
         data: Date.now()
     });
     if(data==null){ //non c'è nessuna sfida
-        console.log("no data");
+        //console.log("no data");
         listaQuiz = await generaQuizSfidaGiornaliera(tipoSfida);
         if(listaQuiz==null){
             return res.json({
@@ -56,7 +56,7 @@ async function getSfidaGiornaliera(req, res) {
                 Sfida: null
             });
         }
-        console.log(listaQuiz);
+        //console.log(listaQuiz);
         nuovaSfidaGiornaliera.listaDiQuiz = listaQuiz;
         nuovaSfidaGiornaliera.save((err, data) => {
             if (err) return res.json({
@@ -74,11 +74,11 @@ async function getSfidaGiornaliera(req, res) {
         })
     }
     else{ //c'è una sfida
-        console.log("si data");
+        //console.log("si data");
         var dataCorrente = (new Date(Date.now())).toISOString().split('T')[0];
         var dataSfida = (data.data).toISOString().split('T')[0];
         if(dataCorrente!==dataSfida){ //la sfida non corrisponde alla data corrente
-            console.log("devo cambiare sfida");
+            //console.log("devo cambiare sfida");
             var tmpRes = await SfidaGiornaliera.deleteMany({}).exec();
             if(!tmpRes){
                 return res.json({
@@ -123,7 +123,7 @@ async function getSfidaGiornaliera(req, res) {
             })
         }
         else{ //la sfida corrisponde alla data corrente
-            console.log("sfida gia presente");
+            //console.log("sfida gia presente");
             return res.json({
                 success: true,
                 statusCode: 200,
