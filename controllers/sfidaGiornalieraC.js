@@ -1,6 +1,8 @@
 const { collection } = require('../models/sfidaGiornalieraM');
 const SfidaGiornaliera = require('../models/sfidaGiornalieraM');
 const User = require('../models/userM');
+const dotenv = require('dotenv').config();  //per usare le variabili di ambiente
+
 
 //Elenco query con mongoose -> https://mongoosejs.com/docs/api.html#Mongoose
 //INSERIRE TUTTI GLI STATUS DI RETURN (ES 404 NOT FOUNT, 200 OK, ...)
@@ -9,20 +11,20 @@ async function generaQuizSfidaGiornaliera(tipoSfida){
     var listaQuiz = [];
     try{
         if(tipoSfida==1){
-            var response = await fetch('http://localhost:8080/generaQuiz?alfabeto=["Kanji"]');
+            var response = await fetch(process.env.SERVER + 'generaQuiz?alfabeto=["Kanji"]');
             listaQuiz.push((await response.json()).newQuiz); //extract JSON from the http response
-            response = await fetch('http://localhost:8080/generaQuiz?alfabeto=["Katakana"]');
+            response = await fetch(process.env.SERVER + 'generaQuiz?alfabeto=["Katakana"]');
             listaQuiz.push((await response.json()).newQuiz); 
-            response = await fetch('http://localhost:8080/generaQuiz?alfabeto=["Katakana"]');
+            response = await fetch(process.env.SERVER + 'generaQuiz?alfabeto=["Katakana"]');
             listaQuiz.push((await response.json()).newQuiz); 
-            response = await fetch('http://localhost:8080/generaQuiz?alfabeto=["Hiragana"]');
+            response = await fetch(process.env.SERVER + 'generaQuiz?alfabeto=["Hiragana"]');
             listaQuiz.push((await response.json()).newQuiz); 
-            response = await fetch('http://localhost:8080/generaQuiz?alfabeto=["Hiragana"]');
+            response = await fetch(process.env.SERVER + 'generaQuiz?alfabeto=["Hiragana"]');
             listaQuiz.push((await response.json()).newQuiz); 
         }
         else{
             for(var i=1;i<=30;++i){
-                var response = await fetch('http://localhost:8080/generaQuiz?alfabeto=["Kanji","Hiragana","Katakana"]');
+                var response = await fetch(process.env.SERVER + 'generaQuiz?alfabeto=["Kanji","Hiragana","Katakana"]');
                 listaQuiz.push((await response.json()).newQuiz); 
             }
         }
