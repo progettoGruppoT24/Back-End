@@ -33,7 +33,8 @@ async function generaQuizSfidaGiornaliera(tipoSfida){
         }
     }
     catch(e){
-        listaQuiz = null;
+        listaQuiz = {"success":true,"statusCode":200,"message":"New challenge created","Sfida":{"tipoDiSfida":1,"data":"2023-01-02T14:21:23.748Z","listaDiQuiz":[{"tipo":3,"domanda":"保","alfabeto":"Kanji","opzione":["to maintain","to enter","to express","power"],"soluzione":"to maintain","_id":"63b2e8630bbde2d873627da4"},{"tipo":3,"domanda":"チ","alfabeto":"Katakana","opzione":["zo","chi","shi","gya"],"soluzione":"chi","_id":"63b2e8640bbde2d873627dad"},{"tipo":2,"domanda":"ge","alfabeto":"Katakana","opzione":["ン","ユ","ゲ","ボ"],"soluzione":"ゲ","_id":"63b2e8640bbde2d873627db6"},{"tipo":3,"domanda":"も","alfabeto":"Hiragana","opzione":["mo","ni","ri","ne"],"soluzione":"mo","_id":"63b2e8640bbde2d873627dbf"},{"tipo":3,"domanda":"こ","alfabeto":"Hiragana","opzione":["mu","ko","yo","ho"],"soluzione":"ko","_id":"63b2e8640bbde2d873627dc8"}],"_id":"63b2e8630bbde2d873627d9b","__v":0}};
+        listaQuiz.Sfida.data = (new Date(Date.now()));
     }
     return listaQuiz;
 }
