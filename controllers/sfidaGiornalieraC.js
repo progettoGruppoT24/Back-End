@@ -12,6 +12,7 @@ const fetch = require('node-fetch');
 async function generaQuizSfidaGiornaliera(tipoSfida){
     var listaQuiz = [];
     try{
+        console.log(process.env.SERVER);
         if(tipoSfida==1){
             var response = await fetch(process.env.SERVER + 'generaQuiz?alfabeto=["Kanji"]');
             listaQuiz.push((await response.json()).newQuiz); //extract JSON from the http response
