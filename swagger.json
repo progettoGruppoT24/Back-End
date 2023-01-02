@@ -6,7 +6,7 @@
       "description": "JGuesser_API",
       "license": { "name": "MIT", "url": "https://opensource.org/licenses/MIT"}
     },
-    "host": "https://JGuesser-BackEnd-Unitn.up.railway.app",
+    "host": "JGuesser-BackEnd-Unitn.up.railway.app",
     "basePath": "/",
     "tags": [
       {
